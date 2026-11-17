@@ -1,0 +1,10 @@
+{
+  "name": "loopmotion",
+  "version": "0.2.0",
+  "description": "Crie, edite e renderize vídeos como código (HTML → MP4) com a LoopMotion: skills de composição, blocos prontos, mídia, legendas, site → vídeo e Remotion → LoopMotion.",
+  "author": { "name": "LoopMotion" },
+  "homepage": "https://github.com/SEU-USUARIO/loopmotion",
+  "repository": "https://github.com/SEU-USUARIO/loopmotion",
+  "license": "Apache-2.0",
+  "keywords": ["video", "motion-graphics", "html-to-video", "mp4", "gsap", "reels"]
+}

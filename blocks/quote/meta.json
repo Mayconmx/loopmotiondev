@@ -1,0 +1,10 @@
+{
+  "name": "Citação / depoimento",
+  "category": "texto",
+  "duration": 4,
+  "description": "Citação grande com aspas e autor.",
+  "vars": [
+    "quote",
+    "author"
+  ]
+}

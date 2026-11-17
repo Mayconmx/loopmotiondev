@@ -1,0 +1,9 @@
+{
+  "name": "Gráfico de barras",
+  "category": "dados",
+  "duration": 5,
+  "description": "Barras animadas a partir de data-data=\"Rótulo:valor,...\". A última barra fica em destaque.",
+  "vars": [
+    "title"
+  ]
+}

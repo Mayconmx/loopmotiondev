@@ -1,0 +1,48 @@
+{
+  "name": "loopmotion",
+  "version": "0.2.0",
+  "description": "Editor de vídeo como código: Studio, engine HTML→MP4 e skills para agentes.",
+  "scripts": {
+    "studio": "node bin/loopmotion.js studio projeto-demo",
+    "thumbs": "node scripts/thumbs.js && node scripts/block-thumbs.js",
+    "catalog": "node scripts/gen-catalog.js",
+    "prepublishOnly": "node scripts/gen-catalog.js"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "gsap": "^3.15.1",
+    "parse5": "^8.1.1",
+    "puppeteer-core": "^25.18.1"
+  },
+  "type": "module",
+  "bin": {
+    "loopmotion": "bin/loopmotion.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin",
+    "src",
+    "studio",
+    "templates",
+    "blocks",
+    "skills",
+    "README.md"
+  ],
+  "keywords": [
+    "video",
+    "motion-graphics",
+    "html-to-video",
+    "mp4",
+    "gsap",
+    "ai-agents",
+    "claude-code",
+    "skills",
+    "remotion-alternative"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SEU-USUARIO/loopmotion.git"
+  }
+}

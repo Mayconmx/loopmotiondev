@@ -1,0 +1,9 @@
+{
+  "name": "Contador",
+  "category": "dados",
+  "duration": 3,
+  "description": "Número grande contando até o valor, com rótulo. Use data-value no elemento .num.",
+  "vars": [
+    "label"
+  ]
+}

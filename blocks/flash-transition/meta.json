@@ -1,0 +1,7 @@
+{
+  "name": "Transição flash",
+  "category": "transição",
+  "duration": 0.6,
+  "description": "Clarão branco rápido para disfarçar um corte. Posicione centralizado no corte.",
+  "vars": []
+}

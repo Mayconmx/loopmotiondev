@@ -1,0 +1,19 @@
+<section class="clip" id="{{id}}" data-label="Gráfico" data-start="{{start}}" data-duration="{{duration}}" data-exit="fade" style="position:absolute;inset:0;padding:10vh 8vw 14vh;display:flex;flex-direction:column;">
+  <h2 data-var="title" style="margin:0;color:#fff;font:800 6vmin system-ui,sans-serif;letter-spacing:-0.03em;">Crescimento mensal</h2>
+  <div class="ch" data-data="Jan:120,Fev:210,Mar:290,Abr:410,Mai:495" style="flex:1;display:flex;align-items:flex-end;gap:3vw;margin-top:5vh;border-bottom:0.25vmin solid #ffffff33;"></div>
+  <script>
+    (() => {
+      const S = '#{{id}}'; const ch = document.querySelector(S + ' .ch');
+      const data = ch.dataset.data.split(',').map((p) => p.split(':')).map(([k, v]) => ({ k: k.trim(), v: +v }));
+      const max = Math.max(...data.map((d) => d.v));
+      ch.innerHTML = data.map((d, i) => `<div style="flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative">
+        <div class="v" style="color:#fff;font:800 3.6vmin system-ui;margin-bottom:1vmin">${d.v.toLocaleString('pt-BR')}</div>
+        <div class="b" style="width:100%;height:${d.v / max * 80}%;border-radius:1vmin 1vmin 0 0;background:${i === data.length - 1 ? 'var(--accent2,#22d3a6)' : 'var(--accent,#4f7cff)'}"></div>
+        <div style="position:absolute;bottom:-5vh;color:#ffffff99;font:600 2.6vmin system-ui">${d.k}</div></div>`).join('');
+      loopmotion.timeline(S)
+        .from(S + ' h2', { y: 30, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.05)
+        .from(S + ' .b', { scaleY: 0, transformOrigin: 'bottom', stagger: 0.18, duration: 0.8, ease: 'power3.out' }, 0.4)
+        .from(S + ' .v', { opacity: 0, y: 20, stagger: 0.18, duration: 0.4 }, 0.8);
+    })();
+  </script>
+</section>

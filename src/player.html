@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>LoopMotion Preview</title>
+<style>
+  :root { color-scheme: dark; --accent: #7c5cff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; height: 100vh; display: grid; grid-template-rows: 1fr auto; background: #0b0b10; color: #e8e8f0; font: 13px/1.4 system-ui, sans-serif; }
+  #stage { display: grid; place-items: center; overflow: hidden; padding: 24px; }
+  #frame { position: relative; box-shadow: 0 20px 60px #0008; background: #000; }
+  iframe { border: 0; transform-origin: 0 0; position: absolute; inset: 0; }
+  #bar { display: flex; gap: 12px; align-items: center; padding: 12px 20px; background: #14141c; border-top: 1px solid #23232e; }
+  button { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font-weight: 600; cursor: pointer; min-width: 84px; }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  .mono { font-family: ui-monospace, monospace; color: #a8a8b8; min-width: 150px; text-align: right; }
+  .brand { font-weight: 700; letter-spacing: .02em; }
+  .brand span { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage"><div id="frame"><iframe id="comp" src="/"></iframe></div></div>
+<div id="bar">
+  <div class="brand">Loop<span>Motion</span></div>
+  <button id="play">▶ Play</button>
+  <input id="scrub" type="range" min="0" step="1" value="0">
+  <div class="mono" id="time">0.00s · f0</div>
+  <label><input type="checkbox" id="loop" checked> loop</label>
+</div>
+<script>
+  const iframe = document.getElementById('comp');
+  const frameBox = document.getElementById('frame');
+  const scrub = document.getElementById('scrub');
+  const timeEl = document.getElementById('time');
+  const playBtn = document.getElementById('play');
+  let lm, cfg, frame = 0, playing = false, busy = false, last = 0;
+
+  function fit() {
+    if (!cfg) return;
+    const stage = document.getElementById('stage');
+    const s = Math.min((stage.clientWidth - 48) / cfg.width, (stage.clientHeight - 48) / cfg.height);
+    iframe.style.width = cfg.width + 'px';
+    iframe.style.height = cfg.height + 'px';
+    iframe.style.transform = `scale(${s})`;
+    frameBox.style.width = cfg.width * s + 'px';
+    frameBox.style.height = cfg.height * s + 'px';
+  }
+
+  async function show(f) {
+    frame = Math.max(0, Math.min(f, scrub.max | 0));
+    scrub.value = frame;
+    timeEl.textContent = `${(frame / cfg.fps).toFixed(2)}s · f${frame}`;
+    if (busy) return; busy = true;
+    await lm.seek(frame / cfg.fps);
+    busy = false;
+  }
+
+  function loop(ts) {
+    if (!playing) return;
+    if (ts - last >= 1000 / cfg.fps) {
+      last = ts;
+      let next = frame + 1;
+      if (next > scrub.max) { if (document.getElementById('loop').checked) next = 0; else { toggle(); return; } }
+      show(next);
+    }
+    requestAnimationFrame(loop);
+  }
+  function toggle() {
+    playing = !playing;
+    playBtn.textContent = playing ? '❚❚ Pause' : '▶ Play';
+    if (playing) requestAnimationFrame(loop);
+  }
+
+  iframe.addEventListener('load', async () => {
+    lm = iframe.contentWindow.loopmotion;
+    await lm.ready();
+    cfg = lm.config;
+    scrub.max = Math.round(cfg.fps * cfg.duration) - 1;
+    fit(); show(0);
+  });
+  scrub.addEventListener('input', () => show(+scrub.value));
+  playBtn.addEventListener('click', toggle);
+  addEventListener('resize', fit);
+  addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (e.code === 'ArrowRight') show(frame + 1);
+    if (e.code === 'ArrowLeft') show(frame - 1);
+  });
+  // Recarrega quando os arquivos mudam
+  new EventSource('/__lm/events').onmessage = () => iframe.contentWindow.location.reload();
+</script>
+</body>
+</html>

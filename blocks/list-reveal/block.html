@@ -1,0 +1,13 @@
+<section class="clip" id="{{id}}" data-label="Lista" data-start="{{start}}" data-duration="{{duration}}" data-exit="fade" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 9vw;gap:3vmin;">
+  <h2 data-var="title" style="margin:0 0 2vmin;color:#fff;font:900 7vmin system-ui,sans-serif;letter-spacing:-0.03em;">3 motivos</h2>
+  <div class="it" style="display:flex;gap:3vmin;align-items:center;color:#fff;font:700 4.6vmin system-ui,sans-serif;"><b style="flex:none;width:8vmin;height:8vmin;border-radius:50%;display:grid;place-items:center;background:var(--accent,#7c5cff);">1</b><span data-var="item1">Primeiro motivo</span></div>
+  <div class="it" style="display:flex;gap:3vmin;align-items:center;color:#fff;font:700 4.6vmin system-ui,sans-serif;"><b style="flex:none;width:8vmin;height:8vmin;border-radius:50%;display:grid;place-items:center;background:var(--accent,#7c5cff);">2</b><span data-var="item2">Segundo motivo</span></div>
+  <div class="it" style="display:flex;gap:3vmin;align-items:center;color:#fff;font:700 4.6vmin system-ui,sans-serif;"><b style="flex:none;width:8vmin;height:8vmin;border-radius:50%;display:grid;place-items:center;background:var(--accent,#7c5cff);">3</b><span data-var="item3">Terceiro motivo</span></div>
+  <script>
+    (() => { const S = '#{{id}}';
+      loopmotion.timeline(S)
+        .from(S + ' h2', { y: 40, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.05)
+        .from(S + ' .it', { x: '-8vw', opacity: 0, stagger: 0.45, duration: 0.55, ease: 'power3.out' }, 0.5)
+        .from(S + ' .it b', { scale: 0, stagger: 0.45, duration: 0.45, ease: 'back.out(2.5)' }, 0.6); })();
+  </script>
+</section>

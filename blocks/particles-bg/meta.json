@@ -1,0 +1,8 @@
+{
+  "name": "Fundo com partículas",
+  "category": "fundo",
+  "duration": null,
+  "description": "Degradê em movimento + partículas subindo. Coloque antes das cenas.",
+  "vars": [],
+  "position": "back"
+}

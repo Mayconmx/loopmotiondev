@@ -1,0 +1,133 @@
+<!doctype html>
+<html data-width="1920" data-height="1080" data-fps="30" data-duration="9">
+<head>
+<meta charset="utf-8">
+<script src="/__lm/gsap.js"></script>
+<style>
+  :root { --accent: #7c5cff; --accent2: #22d3ee; --bg: #07070c; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: #fff;
+    font-family: "Inter", system-ui, "Segoe UI", Roboto, sans-serif; }
+  canvas#bg { position: absolute; inset: 0; }
+  .scene { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+  /* Cena 1 — logo */
+  .logo { display: flex; align-items: center; gap: 36px; }
+  .mark { width: 170px; height: 170px; position: relative; }
+  .ring { position: absolute; inset: 0; border-radius: 50%; border: 18px solid var(--accent);
+    border-right-color: var(--accent2); }
+  .word { font-size: 150px; font-weight: 800; letter-spacing: -0.04em; display: flex; }
+  .word span { display: inline-block; }
+  .word .m { color: var(--accent); }
+  .tagline { margin-top: 40px; font-size: 44px; color: #b9b9d0; font-weight: 500;
+    animation: rise .8s 1.6s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes rise { from { transform: translateY(40px); opacity: 0; } }
+
+  /* Cena 2 — código vira vídeo */
+  .split { display: flex; gap: 70px; align-items: center; }
+  .code { width: 720px; padding: 40px 44px; border-radius: 28px; background: #11111b; border: 1px solid #262638;
+    font: 30px/1.65 ui-monospace, "JetBrains Mono", Menlo, monospace; color: #c9c9e0; box-shadow: 0 40px 80px #0009; }
+  .code .t { color: #7dd3fc; } .code .a { color: #c4b5fd; } .code .s { color: #86efac; }
+  .code div { opacity: 0; }
+  .arrow { font-size: 110px; color: var(--accent2); }
+  .screen { width: 620px; height: 350px; border-radius: 28px; overflow: hidden; position: relative;
+    background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 40px 80px #0009; }
+  .screen .ball { position: absolute; width: 110px; height: 110px; border-radius: 50%; background: #fff; top: 120px; left: 40px; }
+  .screen .label { position: absolute; bottom: 22px; left: 28px; font-weight: 700; font-size: 30px; }
+  .headline { font-size: 76px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 70px; }
+  .headline em { font-style: normal; background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* Cena 3 — CTA */
+  .cta-title { font-size: 120px; font-weight: 800; letter-spacing: -0.04em; text-align: center; line-height: 1.05; }
+  .pill { margin-top: 60px; padding: 26px 60px; border-radius: 999px; font-size: 46px; font-weight: 700;
+    background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  .progress { position: absolute; left: 0; bottom: 0; height: 8px; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+</style>
+</head>
+<body>
+  <canvas id="bg" width="1920" height="1080"></canvas>
+
+  <!-- CENA 1 (0s–3s) -->
+  <section class="clip scene" id="s1" data-label="Abertura" data-start="0" data-duration="3">
+    <div class="logo">
+      <div class="mark"><div class="ring"></div></div>
+      <div class="word"><span>L</span><span>o</span><span>o</span><span>p</span><span class="m">M</span><span class="m">o</span><span class="m">t</span><span class="m">i</span><span class="m">o</span><span class="m">n</span></div>
+    </div>
+    <div class="tagline" data-var="tagline">Vídeo como código.</div>
+  </section>
+
+  <!-- CENA 2 (3s–6.5s) -->
+  <section class="clip scene" id="s2" data-label="Código → vídeo" data-start="3" data-duration="3.5">
+    <div class="headline">Escreva <em>HTML</em>. Receba <em>MP4</em>.</div>
+    <div class="split">
+      <div class="code">
+        <div>&lt;<span class="t">section</span> <span class="a">class</span>=<span class="s">"clip"</span></div>
+        <div>&nbsp;&nbsp;<span class="a">data-start</span>=<span class="s">"0"</span></div>
+        <div>&nbsp;&nbsp;<span class="a">data-duration</span>=<span class="s">"3"</span>&gt;</div>
+        <div>&nbsp;&nbsp;&lt;<span class="t">div</span> <span class="a">class</span>=<span class="s">"ball"</span>/&gt;</div>
+        <div>&lt;/<span class="t">section</span>&gt;</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="screen"><div class="ball"></div><div class="label">out.mp4</div></div>
+    </div>
+  </section>
+
+  <!-- CENA 3 (6.5s–9s) -->
+  <section class="clip scene" id="s3" data-label="Chamada final" data-start="6.5" data-duration="2.5">
+    <div class="cta-title" data-var="cta">Seus vídeos,<br>em escala.</div>
+    <div class="pill" data-var="url">loopmotion.dev</div>
+  </section>
+
+  <div class="progress" id="progress"></div>
+
+  <audio data-label="Trilha" src="music.wav" data-start="0" data-volume="0.8"></audio>
+
+<script>
+  // ---------- GSAP: a timeline global é controlada pelo relógio da LoopMotion ----------
+  // Uma timeline por cena, com tempos LOCAIS (0 = início da cena).
+  // Mover a cena na timeline do Studio leva as animações junto.
+  loopmotion.timeline('#s1')
+    .from('#s1 .mark', { scale: 0, rotation: -180, duration: 0.9, ease: 'back.out(1.6)' }, 0.1)
+    .from('#s1 .word span', { y: 120, opacity: 0, stagger: 0.05, duration: 0.6, ease: 'power3.out' }, 0.35)
+    .to('#s1 .ring', { rotation: 360, duration: 3, ease: 'none' }, 0)
+    .to('#s1', { scale: 1.08, opacity: 0, duration: 0.4, ease: 'power2.in' }, 2.6);
+
+  loopmotion.timeline('#s2')
+    .from('#s2 .headline', { y: 50, opacity: 0, duration: 0.6, ease: 'power3.out' }, 0.05)
+    .to('#s2 .code div', { opacity: 1, stagger: 0.18, duration: 0.25 }, 0.4)
+    .from('#s2 .arrow', { x: -40, opacity: 0, duration: 0.4 }, 1.3)
+    .from('#s2 .screen', { scale: 0.7, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, 1.5)
+    .to('#s2 .ball', { left: 470, duration: 0.9, ease: 'power2.inOut', yoyo: true, repeat: 1 }, 1.8)
+    .to('#s2', { y: -60, opacity: 0, duration: 0.4, ease: 'power2.in' }, 3.1);
+
+  loopmotion.timeline('#s3')
+    .from('#s3 .cta-title', { y: 80, opacity: 0, duration: 0.7, ease: 'power3.out' }, 0.1)
+    .from('#s3 .pill', { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(2)' }, 0.5);
+
+  // Barra de progresso: global (acompanha o vídeo inteiro)
+  gsap.fromTo('#progress', { width: '0%' }, { width: '100%', duration: loopmotion.config.duration, ease: 'none' });
+
+  // ---------- onFrame: animação "manual" em canvas, função pura do tempo ----------
+  const ctx = document.getElementById('bg').getContext('2d');
+  const dots = Array.from({ length: 90 }, () => ({
+    x: Math.random() * 1920, y: Math.random() * 1080, r: 1 + Math.random() * 3,
+    sp: 20 + Math.random() * 60, ph: Math.random() * Math.PI * 2,
+  }));
+  loopmotion.onFrame((t) => {
+    ctx.clearRect(0, 0, 1920, 1080);
+    const g = ctx.createRadialGradient(960 + Math.sin(t * 0.6) * 300, 540, 0, 960, 540, 1100);
+    g.addColorStop(0, 'rgba(124,92,255,0.28)');
+    g.addColorStop(0.5, 'rgba(34,211,238,0.06)');
+    g.addColorStop(1, 'rgba(7,7,12,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, 1920, 1080);
+    for (const d of dots) {
+      const y = (d.y - t * d.sp + 1080) % 1080;
+      ctx.globalAlpha = 0.25 + 0.25 * Math.sin(t * 2 + d.ph);
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(d.x + Math.sin(t + d.ph) * 20, y, d.r, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  });
+</script>
+</body>
+</html>

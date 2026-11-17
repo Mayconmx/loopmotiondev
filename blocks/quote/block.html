@@ -1,0 +1,12 @@
+<section class="clip" id="{{id}}" data-label="Citação" data-start="{{start}}" data-duration="{{duration}}" data-exit="fade" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 10vw;">
+  <div class="q" style="color:var(--accent,#7c5cff);font:900 20vmin/0.6 Georgia,serif;height:9vmin;">“</div>
+  <p class="tx" data-var="quote" style="margin:0;color:#fff;font:700 6vmin/1.2 system-ui,sans-serif;letter-spacing:-0.02em;">Fizemos em uma tarde o que levava uma semana de edição.</p>
+  <div class="au" data-var="author" style="margin-top:4vmin;color:#ffffffa0;font:600 3.2vmin system-ui,sans-serif;">— Maria Lima, Head de Marketing</div>
+  <script>
+    (() => { const S = '#{{id}}';
+      loopmotion.timeline(S)
+        .from(S + ' .q', { scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, 0)
+        .from(S + ' .tx', { y: 40, opacity: 0, duration: 0.7, ease: 'power3.out' }, 0.2)
+        .from(S + ' .au', { x: -30, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.7); })();
+  </script>
+</section>

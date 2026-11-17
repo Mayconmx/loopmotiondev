@@ -1,0 +1,15 @@
+<div class="clip" id="{{id}}" data-label="Siga" data-start="{{start}}" data-duration="{{duration}}" data-exit="fade" style="position:absolute;left:0;right:0;bottom:14vh;display:flex;justify-content:center;">
+  <div class="pill" style="display:flex;align-items:center;gap:2vmin;padding:1.8vmin 4vmin 1.8vmin 1.8vmin;border-radius:99vmin;background:#fff;color:#111;font:800 4vmin system-ui,sans-serif;box-shadow:0 2vmin 6vmin #0005;">
+    <div class="av" style="width:7vmin;height:7vmin;border-radius:50%;background:linear-gradient(135deg,var(--accent,#7c5cff),var(--accent2,#22d3ee));"></div>
+    <span data-var="handle">@suamarca</span>
+    <span class="bt" style="margin-left:1vmin;padding:1vmin 2.6vmin;border-radius:99vmin;background:var(--accent,#7c5cff);color:#fff;font-size:3vmin;">Seguir</span>
+  </div>
+  <script>
+    (() => { const S = '#{{id}}';
+      loopmotion.timeline(S)
+        .from(S + ' .pill', { y: 80, scale: 0.8, opacity: 0, duration: 0.6, ease: 'back.out(1.8)' }, 0)
+        .to(S + ' .bt', { scale: 0.9, duration: 0.12, ease: 'power2.in' }, 1.2)
+        .to(S + ' .bt', { scale: 1, backgroundColor: '#16a34a', duration: 0.25, ease: 'back.out(3)' }, 1.32);
+      loopmotion.onFrame((t) => { document.querySelector(S + ' .bt').textContent = t >= 1.32 ? 'Seguindo ✓' : 'Seguir'; }, S); })();
+  </script>
+</div>

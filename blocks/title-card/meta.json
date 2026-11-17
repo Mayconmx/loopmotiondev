@@ -1,0 +1,10 @@
+{
+  "name": "Título + subtítulo",
+  "category": "texto",
+  "duration": 3,
+  "description": "Título grande centralizado com subtítulo, entrada palavra por palavra.",
+  "vars": [
+    "title",
+    "subtitle"
+  ]
+}

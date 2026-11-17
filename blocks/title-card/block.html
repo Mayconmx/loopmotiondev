@@ -1,0 +1,13 @@
+<section class="clip" id="{{id}}" data-label="Título" data-start="{{start}}" data-duration="{{duration}}" data-exit="fade" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 8vw;">
+  <h1 class="t" data-var="title" style="margin:0;color:#fff;font:900 11vmin/1 system-ui,sans-serif;letter-spacing:-0.04em;">Um título forte</h1>
+  <p class="s" data-var="subtitle" style="margin:3vmin 0 0;color:#ffffffb3;font:500 3.6vmin system-ui,sans-serif;">Subtítulo de apoio com uma linha</p>
+  <script>
+    (() => {
+      const S = '#{{id}}'; const h = document.querySelector(S + ' .t');
+      h.innerHTML = h.textContent.trim().split(/\s+/).map((w) => `<span style="display:inline-block">${w}</span>`).join(' ');
+      loopmotion.timeline(S)
+        .from(S + ' .t span', { y: '6vmin', opacity: 0, stagger: 0.08, duration: 0.6, ease: 'back.out(1.6)' }, 0.05)
+        .from(S + ' .s', { y: '2vmin', opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.45);
+    })();
+  </script>
+</section>

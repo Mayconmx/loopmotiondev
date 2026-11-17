@@ -1,0 +1,9 @@
+{
+  "name": "Legenda",
+  "category": "texto",
+  "duration": 2.5,
+  "description": "Uma linha de legenda com caixa escura; palavra-chave em destaque com <em>.",
+  "vars": [
+    "text"
+  ]
+}

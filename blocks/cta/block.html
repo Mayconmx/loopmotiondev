@@ -1,0 +1,11 @@
+<section class="clip" id="{{id}}" data-label="CTA" data-start="{{start}}" data-duration="{{duration}}" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 8vw;">
+  <h2 class="h" data-var="headline" style="margin:0;color:#fff;font:900 9vmin/1.02 system-ui,sans-serif;letter-spacing:-0.04em;">Comece hoje.</h2>
+  <div class="btn" data-var="button" style="margin-top:5vmin;padding:2.4vmin 6vmin;border-radius:99vmin;color:#fff;font:700 4.2vmin system-ui,sans-serif;background:linear-gradient(90deg,var(--accent,#7c5cff),var(--accent2,#22d3ee));">seusite.com</div>
+  <script>
+    (() => { const S = '#{{id}}';
+      loopmotion.timeline(S)
+        .from(S + ' .h', { y: 60, opacity: 0, duration: 0.7, ease: 'power3.out' }, 0.05)
+        .from(S + ' .btn', { scale: 0.5, opacity: 0, duration: 0.6, ease: 'back.out(2)' }, 0.45)
+        .to(S + ' .btn', { scale: 1.05, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 3 }, 1.2); })();
+  </script>
+</section>

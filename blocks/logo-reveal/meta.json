@@ -1,0 +1,9 @@
+{
+  "name": "Logo reveal",
+  "category": "marca",
+  "duration": 3,
+  "description": "Anel girando + nome da marca revelado, com saída em zoom.",
+  "vars": [
+    "brand"
+  ]
+}

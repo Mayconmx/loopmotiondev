@@ -1,0 +1,12 @@
+{
+  "name": "loopmotion",
+  "description": "Plugins oficiais da LoopMotion: vídeo como código para agentes.",
+  "owner": { "name": "LoopMotion" },
+  "plugins": [
+    {
+      "name": "loopmotion",
+      "source": "./",
+      "description": "Crie, edite e renderize vídeos LoopMotion (HTML → MP4) a partir de um pedido em linguagem natural."
+    }
+  ]
+}

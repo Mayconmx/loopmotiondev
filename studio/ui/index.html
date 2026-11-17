@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LoopMotion Studio</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Ccircle cx=%2216%22 cy=%2216%22 r=%2211%22 fill=%22none%22 stroke=%22%237c5cff%22 stroke-width=%226%22/%3E%3C/svg%3E">
+</head>
+<body>
+<header id="top">
+  <div class="brand"><span class="logo-ring"></span>Loop<b>Motion</b><small>Studio</small></div>
+  <button class="comp-switch" id="compSwitch" title="Trocar composição"><span id="compName">—</span><i data-i="chev"></i></button>
+  <div class="sep"></div>
+  <button class="icon" id="undoBtn" title="Desfazer (Ctrl+Z)"><i data-i="undo"></i></button>
+  <button class="icon" id="redoBtn" title="Refazer (Ctrl+Shift+Z)"><i data-i="redo"></i></button>
+  <div class="grow"></div>
+  <button class="lint ok" id="lintBtn" title="Verificação da composição"><i data-i="check"></i><span>OK</span></button>
+  <span class="live" id="liveDot" title="Sincronizado com o disco: edições de agentes aparecem aqui ao vivo">● ao vivo</span>
+  <button class="icon" id="settingsBtn" title="Configurações"><i data-i="gear"></i></button>
+  <button class="primary" id="exportBtn"><i data-i="export"></i>Exportar</button>
+</header>
+
+<main id="ws">
+  <!-- Painel esquerdo -->
+  <aside id="left" class="panel">
+    <nav class="tabs" data-group="left">
+      <button data-tab="project" class="on">Projeto</button>
+      <button data-tab="media">Mídia</button>
+      <button data-tab="blocks">Blocos</button>
+      <button data-tab="templates">Templates</button>
+    </nav>
+    <section data-pane="project" class="pane on">
+      <div class="pane-head"><h4>Composições</h4><button class="mini" id="newCompBtn">+ Nova</button></div>
+      <ul id="compList" class="list"></ul>
+      <div class="pane-head"><h4>Camadas</h4><span class="hint" id="layerCount"></span></div>
+      <ul id="layerList" class="list layers"></ul>
+      <div class="pane-head"><h4>Exportações</h4></div>
+      <ul id="exportList" class="list"></ul>
+    </section>
+    <section data-pane="media" class="pane">
+      <label class="drop" id="dropZone">
+        <input type="file" id="fileInput" multiple hidden>
+        <i data-i="upload"></i><b>Solte arquivos aqui</b><span>imagens, vídeos, áudio e fontes</span>
+      </label>
+      <div id="assetGrid" class="assets"></div>
+    </section>
+    <section data-pane="blocks" class="pane">
+      <p class="tip" style="padding:12px 14px 0">Clique para inserir no playhead. Os blocos se adaptam a qualquer formato.</p>
+      <div id="blockGrid" class="tpls"></div>
+    </section>
+    <section data-pane="templates" class="pane">
+      <div id="tplGrid" class="tpls"></div>
+    </section>
+  </aside>
+
+  <!-- Palco -->
+  <section id="stageWrap">
+    <div id="stage">
+      <div id="frame"><iframe id="preview" title="preview"></iframe></div>
+      <div id="empty" class="empty hidden">
+        <h2>Crie seu primeiro vídeo</h2>
+        <p>Escolha um template para começar ou peça para a IA criar do zero.</p>
+        <div id="emptyTpls" class="tpls row"></div>
+      </div>
+    </div>
+    <div id="transport">
+      <button class="icon" id="toStart" title="Início (Home)"><i data-i="start"></i></button>
+      <button class="icon" id="prevFrame" title="Frame anterior (←)"><i data-i="prev"></i></button>
+      <button class="play" id="playBtn" title="Play/Pause (Espaço)"><i data-i="play"></i></button>
+      <button class="icon" id="nextFrame" title="Próximo frame (→)"><i data-i="next"></i></button>
+      <div class="tc"><span id="tcNow">00:00.00</span><span class="dim"> / <span id="tcDur">00:00.00</span></span></div>
+      <div class="grow"></div>
+      <span class="dim" id="resLabel"></span>
+      <button class="icon toggle on" id="loopBtn" title="Loop"><i data-i="loop"></i></button>
+      <button class="icon toggle on" id="audioBtn" title="Áudio no preview"><i data-i="sound"></i></button>
+    </div>
+  </section>
+
+  <!-- Painel direito -->
+  <aside id="right" class="panel">
+    <nav class="tabs" data-group="right">
+      <button data-tab="inspector" class="on">Propriedades</button>
+      <button data-tab="code">Código</button>
+      <button data-tab="ai"><i data-i="spark"></i>IA</button>
+    </nav>
+    <section data-pane="inspector" class="pane on" id="inspector"></section>
+    <section data-pane="code" class="pane" id="codePane">
+      <div class="code-bar"><span id="codeStatus" class="dim">salvo</span><div class="grow"></div><button class="mini" id="formatHint" title="As mudanças são salvas sozinhas">Ctrl+S salva</button></div>
+      <div id="code"></div>
+    </section>
+    <section data-pane="ai" class="pane" id="aiPane">
+      <div id="aiLog" class="ai-log"></div>
+      <div id="aiSuggest" class="chips"></div>
+      <form id="aiForm" class="ai-form">
+        <textarea id="aiInput" rows="3" placeholder="Descreva o que mudar… ex.: “deixe a cena 2 mais rápida e troque a cor para laranja”"></textarea>
+        <button class="primary" id="aiSend" type="submit"><i data-i="send"></i></button>
+      </form>
+    </section>
+  </aside>
+</main>
+
+<!-- Timeline -->
+<footer id="timeline">
+  <div class="tl-bar">
+    <div class="tl-add">
+      <button class="mini" id="addText"><i data-i="text"></i>Texto</button>
+      <button class="mini" id="addScene"><i data-i="scene"></i>Cena</button>
+      <button class="mini" id="addMedia"><i data-i="image"></i>Mídia</button>
+    </div>
+    <div class="grow"></div>
+    <label class="dim chk"><input type="checkbox" id="snapChk" checked> ímã</label>
+    <i data-i="zoomout" class="dim"></i><input type="range" id="zoom" min="0" max="100" value="0"><i data-i="zoomin" class="dim"></i>
+    <button class="mini" id="fitBtn">Ajustar</button>
+  </div>
+  <div class="tl-body" id="tlBody">
+    <div class="tl-labels" id="tlLabels"><div class="tl-corner"></div></div>
+    <div class="tl-scroll" id="tlScroll">
+      <div class="tl-inner" id="tlInner">
+        <div class="ruler" id="ruler"></div>
+        <div class="tracks" id="tracks"></div>
+        <div class="end-mark" id="endMark"></div>
+        <div class="playhead" id="playhead"><div class="ph-head"></div></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="modalRoot"></div>
+<div id="toasts"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

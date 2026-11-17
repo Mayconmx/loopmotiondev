@@ -1,0 +1,10 @@
+{
+  "name": "Lower third",
+  "category": "texto",
+  "duration": 5,
+  "description": "Nome e cargo no canto inferior, com faixa colorida.",
+  "vars": [
+    "name",
+    "role"
+  ]
+}

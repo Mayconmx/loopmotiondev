@@ -1,0 +1,7 @@
+<div class="clip" id="{{id}}" data-label="Progresso" data-start="0" style="position:absolute;top:0;left:0;right:0;height:0.8vmin;background:#ffffff1a;z-index:50;">
+  <div class="f" style="height:100%;width:0;background:linear-gradient(90deg,var(--accent,#7c5cff),var(--accent2,#22d3ee));"></div>
+  <script>
+    (() => { const f = document.querySelector('#{{id}} .f');
+      loopmotion.onFrame((t) => { f.style.width = `${Math.min(100, (t / loopmotion.config.duration) * 100)}%`; }); })();
+  </script>
+</div>

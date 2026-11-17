@@ -1,0 +1,9 @@
+<div class="clip" id="{{id}}" data-label="Wipe" data-start="{{start}}" data-duration="{{duration}}" style="position:absolute;inset:0;z-index:40;pointer-events:none;overflow:hidden;">
+  <div class="p" style="position:absolute;inset:0;background:var(--accent,#7c5cff);"></div>
+  <script>
+    (() => { const S = '#{{id}}'; const d = Number(document.querySelector(S).dataset.duration);
+      loopmotion.timeline(S)
+        .fromTo(S + ' .p', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: d / 2, ease: 'power3.in' }, 0)
+        .to(S + ' .p', { clipPath: 'inset(0 0 0 100%)', duration: d / 2, ease: 'power3.out' }, d / 2); })();
+  </script>
+</div>

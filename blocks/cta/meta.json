@@ -1,0 +1,10 @@
+{
+  "name": "Chamada (CTA)",
+  "category": "marca",
+  "duration": 3,
+  "description": "Frase final + botão com URL ou @.",
+  "vars": [
+    "headline",
+    "button"
+  ]
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html data-width="1920" data-height="1080" data-fps="30" data-duration="8">
+<head>
+<meta charset="utf-8">
+<script src="/__lm/gsap.js"></script>
+<style>
+  :root { --bg: #f2ff5c; --ink: #111; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--ink); font-family: "Inter", system-ui, sans-serif; }
+  .line { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 120px; }
+  .line h1 { margin: 0; font-size: 190px; font-weight: 900; letter-spacing: -.055em; line-height: .92; }
+  .line h1 .c { display: inline-block; }
+  .inv { background: var(--ink); color: var(--bg); }
+  .big h1 { font-size: 420px; }
+  .stroke h1 { color: transparent; -webkit-text-stroke: 4px var(--ink); }
+</style>
+</head>
+<body>
+  <section class="clip line" data-label="Frase 1" data-start="0" data-duration="2"><h1 class="split" data-var="l1">Ideias grandes</h1></section>
+  <section class="clip line inv" data-label="Frase 2" data-start="2" data-duration="1.8"><h1 class="split" data-var="l2">merecem</h1></section>
+  <section class="clip line big" data-label="Frase 3" data-start="3.8" data-duration="1.7"><h1 class="split" data-var="l3">MOVIMENTO</h1></section>
+  <section class="clip line inv" data-label="Frase 4" data-start="5.5" data-duration="2.5"><h1 class="split" data-var="l4">Faça com LoopMotion.</h1></section>
+
+<script>
+  // quebra cada título em letras (depois que as variáveis forem aplicadas)
+  document.querySelectorAll('.split').forEach((h) => {
+    h.innerHTML = [...h.textContent].map((ch) => (ch === ' ' ? ' ' : `<span class="c">${ch}</span>`)).join('');
+  });
+  const scene = (n) => `[data-label="Frase ${n}"]`;
+  loopmotion.timeline(scene(1))
+    .from(`${scene(1)} .c`, { y: 220, opacity: 0, stagger: 0.035, duration: 0.55, ease: 'back.out(1.7)' }, 0.05)
+    .to(`${scene(1)} h1`, { scale: 1.12, duration: 2, ease: 'none' }, 0);
+  loopmotion.timeline(scene(2))
+    .from(`${scene(2)} .c`, { scale: 0, rotate: -40, stagger: 0.04, duration: 0.45, ease: 'back.out(2.5)' }, 0.02);
+  loopmotion.timeline(scene(3))
+    .from(`${scene(3)} .c`, { y: (i) => (i % 2 ? -500 : 500), stagger: 0.03, duration: 0.6, ease: 'power4.out' }, 0.02)
+    .to(`${scene(3)} h1`, { letterSpacing: '0.02em', duration: 1.6, ease: 'power1.inOut' }, 0.1);
+  loopmotion.timeline(scene(4))
+    .from(`${scene(4)} .c`, { opacity: 0, x: 60, stagger: 0.025, duration: 0.4, ease: 'power3.out' }, 0.02)
+    .to(`${scene(4)} h1`, { y: -20, duration: 2.4, ease: 'none' }, 0.1);
+</script>
+</body>
+</html>

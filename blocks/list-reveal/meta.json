@@ -1,0 +1,12 @@
+{
+  "name": "Lista em sequência",
+  "category": "texto",
+  "duration": 4.5,
+  "description": "Título + 3 itens numerados entrando um a um.",
+  "vars": [
+    "title",
+    "item1",
+    "item2",
+    "item3"
+  ]
+}

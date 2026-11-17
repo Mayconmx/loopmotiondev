@@ -1,0 +1,9 @@
+{
+  "name": "Siga nas redes",
+  "category": "interface",
+  "duration": 3,
+  "description": "Pílula \"Siga @usuario\" com ícone e clique animado.",
+  "vars": [
+    "handle"
+  ]
+}

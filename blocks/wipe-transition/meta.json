@@ -1,0 +1,7 @@
+{
+  "name": "Transição wipe",
+  "category": "transição",
+  "duration": 0.9,
+  "description": "Painel colorido que varre a tela da esquerda para a direita. Centralize no corte.",
+  "vars": []
+}

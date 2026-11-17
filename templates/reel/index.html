@@ -1,0 +1,73 @@
+<!doctype html>
+<html data-width="1080" data-height="1920" data-fps="30" data-duration="10">
+<head>
+<meta charset="utf-8">
+<script src="/__lm/gsap.js"></script>
+<style>
+  :root { --accent: #ff5c35; --ink: #0d0d0d; --paper: #f6f1e7; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif; }
+  .full { position: absolute; inset: 0; }
+  .hook { display: flex; flex-direction: column; justify-content: center; padding: 0 90px; }
+  .hook .kicker { font-size: 44px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
+  .hook h1 { font-size: 150px; line-height: .95; letter-spacing: -.045em; margin: 24px 0 0; font-weight: 900; }
+  .hook h1 .w { display: inline-block; }
+  .tips { display: flex; flex-direction: column; justify-content: center; padding: 0 90px; gap: 34px; }
+  .tip { display: flex; gap: 34px; align-items: center; background: #fff; border-radius: 40px; padding: 44px 48px; box-shadow: 0 20px 50px #0001; }
+  .tip b { flex: none; width: 110px; height: 110px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; font-size: 56px; }
+  .tip span { font-size: 54px; font-weight: 700; line-height: 1.1; letter-spacing: -.02em; }
+  .outro { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--ink); color: var(--paper); }
+  .outro h2 { font-size: 120px; line-height: 1; letter-spacing: -.04em; margin: 0 80px; font-weight: 900; }
+  .outro .handle { margin-top: 60px; font-size: 56px; font-weight: 700; color: var(--ink); background: var(--accent); padding: 22px 50px; border-radius: 99px; }
+  .caption { position: absolute; left: 70px; right: 70px; bottom: 260px; text-align: center; font-size: 60px; font-weight: 800; line-height: 1.15; }
+  .caption span { background: var(--ink); color: #fff; padding: 6px 18px; border-radius: 14px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .bar { position: absolute; top: 60px; left: 70px; right: 70px; height: 10px; border-radius: 10px; background: #0001; overflow: hidden; }
+  .bar div { height: 100%; width: 0; background: var(--accent); }
+</style>
+</head>
+<body>
+  <div class="bar"><div id="prog"></div></div>
+
+  <section class="clip full hook" data-label="Gancho" data-start="0" data-duration="3">
+    <div class="kicker" data-var="kicker">3 dicas rápidas</div>
+    <h1 id="hookTitle" data-var="hook">Vídeos que prendem em 3 segundos</h1>
+  </section>
+
+  <section class="clip full tips" data-label="Dicas" data-start="3" data-duration="4.5">
+    <div class="tip"><b>1</b><span data-var="tip1">Comece pelo resultado, não pela intro</span></div>
+    <div class="tip"><b>2</b><span data-var="tip2">Uma ideia por cena, texto grande</span></div>
+    <div class="tip"><b>3</b><span data-var="tip3">Legenda sempre: 80% assistem sem som</span></div>
+  </section>
+
+  <section class="clip full outro" data-label="Final" data-start="7.5" data-duration="2.5">
+    <h2 data-var="outro">Salve para depois</h2>
+    <div class="handle" data-var="handle">@loopmotion</div>
+  </section>
+
+  <!-- Legendas: uma por clip, posicionadas na timeline -->
+  <div class="clip caption" data-label="Legenda 1" data-start="0.3" data-duration="2.5" data-enter="pop" data-exit="fade"><span data-var="cap1">Pare de perder audiência 👇</span></div>
+  <div class="clip caption" data-label="Legenda 2" data-start="3.2" data-duration="4" data-enter="slide-up" data-exit="fade"><span data-var="cap2">Aplique hoje no seu próximo vídeo</span></div>
+
+<script>
+  // o texto do gancho entra palavra por palavra
+  const h = document.getElementById('hookTitle');
+  h.innerHTML = h.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(' ');
+
+  loopmotion.timeline('.hook')
+    .from('.hook .kicker', { y: 40, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.1)
+    .from('.hook h1 .w', { y: 120, opacity: 0, rotate: 4, stagger: 0.09, duration: 0.6, ease: 'back.out(1.6)' }, 0.25)
+    .to('.hook', { x: -1080, duration: 0.45, ease: 'power3.in' }, 2.55);
+
+  loopmotion.timeline('.tips')
+    .from('.tip', { x: 900, opacity: 0, stagger: 0.55, duration: 0.6, ease: 'power3.out' }, 0.1)
+    .from('.tip b', { scale: 0, stagger: 0.55, duration: 0.5, ease: 'back.out(2.5)' }, 0.3)
+    .to('.tips', { opacity: 0, y: -80, duration: 0.4, ease: 'power2.in' }, 4.1);
+
+  loopmotion.timeline('.outro')
+    .from('.outro h2', { scale: 0.7, opacity: 0, duration: 0.6, ease: 'back.out(1.8)' }, 0.1)
+    .from('.outro .handle', { y: 80, opacity: 0, duration: 0.5, ease: 'power3.out' }, 0.5);
+
+  gsap.fromTo('#prog', { width: '0%' }, { width: '100%', duration: loopmotion.config.duration, ease: 'none' });
+</script>
+</body>
+</html>
